@@ -1,0 +1,9 @@
+# Carpetas de compilación de Visual Studio
+[Dd]ebug/
+[Rr]elease/
+x64/
+ipch/
+.vs/
+*.suo
+*.user
+*.aps
