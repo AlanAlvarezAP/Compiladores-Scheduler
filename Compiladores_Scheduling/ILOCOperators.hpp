@@ -10,13 +10,10 @@
 
 typedef unsigned int uint;
 
-int UNIDAD = 2;
-int START = 1;
-
 enum Operaciones { loadI, loadAI, storeAI, add, sub, mult, lshift, rshift, nop };
-std::unordered_map<std::string, Operaciones> Operations = { {"loadI", loadI},{"loadAI", loadAI},{"storeAI", storeAI},{"add", add},{"sub", sub},{"mult", mult},{"lshift", lshift},{"rshift", rshift},{"nop", nop} };
+static std::unordered_map<std::string, Operaciones> Operations = { {"loadI", loadI},{"loadAI", loadAI},{"storeAI", storeAI},{"add", add},{"sub", sub},{"mult", mult},{"lshift", lshift},{"rshift", rshift},{"nop", nop} };
 
-int ParseOperaciones(Operaciones op) {
+static int ParseOperaciones(Operaciones op) {
     switch (op) {
     case loadI:
     case add:

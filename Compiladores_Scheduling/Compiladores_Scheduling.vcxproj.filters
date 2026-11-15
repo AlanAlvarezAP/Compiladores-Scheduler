@@ -18,5 +18,19 @@
     <ClCompile Include="Compiladores_Scheduling.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClInclude Include="GrafoPredSec.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClCompile Include="GrafoPredSec.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Scheduler.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="ILOCOperators.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

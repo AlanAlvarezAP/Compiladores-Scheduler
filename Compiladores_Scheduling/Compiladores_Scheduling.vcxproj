@@ -124,6 +124,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Compiladores_Scheduling.cpp" />
+    <ClCompile Include="GrafoPredSec.cpp" />
+    <ClInclude Include="GrafoPredSec.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ILOCOperators.hpp" />
+    <ClInclude Include="Scheduler.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
