@@ -23,6 +23,7 @@ struct Node {
 	std::vector<Arista> succs;
 	int priority = -1;
 	int S = -1;
+	int tieKey = 0;
 };
 
 class Grafo {
@@ -36,6 +37,8 @@ public:
 	void Add(Node &A,Node &B,AristaType tip);
 	void FillGraph(const Instruction &instru);
 	void Imprimir();
-	void FillPriorities();
+	void FillPrioritiesForward();
+	void FillPrioritiesBackward();
 	bool AllPredsEnded(const Node& nod, int ciclo);
+	bool AllSuccsEnded(const Node& nod, int ciclo);
 };
