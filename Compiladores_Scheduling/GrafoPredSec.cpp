@@ -101,6 +101,7 @@ void Grafo::Add(Node& A,Node &B, AristaType tip) {
 
 void Grafo::FillGraph(const Instruction &instru) {
     Node tmpNode{ instru,{},{}};
+    tmpNode.tieKey = instru.order;
     grafo.push_back(tmpNode);
 
     int b = grafo.size() - 1;
@@ -195,7 +196,7 @@ void Grafo::Imprimir() {
     std::cout << std::endl;
 }
 
-void Grafo::FillPriorities() {
+void Grafo::FillPrioritiesForward() {
     for (auto it = grafo.rbegin(); it != grafo.rend(); it++) {
         Node& tmp = *it;
 
@@ -209,9 +210,40 @@ void Grafo::FillPriorities() {
     }
 }
 
+void Grafo::FillPrioritiesBackward() {
+    for (auto it = grafo.begin(); it != grafo.end(); it++) {
+        Node& tmp = *it;
+
+        int maxPrio = 0;
+        for (auto succ : tmp.preds) {
+            Node& visit = grafo[succ.dest];
+            maxPrio = std::max(maxPrio, visit.priority);
+        }
+
+        tmp.priority = ParseOperaciones(Operations[tmp.instru.operation]) + maxPrio;
+    }
+}
+
 
 bool Grafo::AllPredsEnded(const Node& nod, int ciclo) {
     for (auto& p : nod.preds) {
+        const Node& pred = grafo[p.dest];
+        if (pred.S == -1) {
+            return false;
+        }
+        if (pred.S + p.retardo > ciclo) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Grafo::AllSuccsEnded(const Node& nod, int ciclo) {
+    if (nod.succs.empty()) {
+        return ParseOperaciones(Operations[nod.instru.operation]) <= ciclo;
+    }
+
+    for (auto& p : nod.succs) {
         const Node& pred = grafo[p.dest];
         if (pred.S == -1) {
             return false;

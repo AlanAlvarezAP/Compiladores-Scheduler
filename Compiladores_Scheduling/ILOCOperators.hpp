@@ -48,4 +48,60 @@ struct Instruction {
             resultado.push_back(part);
         }
     }
+
+    void MaximizeRegister(const std::vector<std::string>& operan, const std::vector<std::string>& dest, int &MaxRegister) {
+        for (const auto &op : operan) {
+            if (op[0] == 'r') {
+                int tmpMax = std::stoi(op.substr(1));
+                MaxRegister = tmpMax > MaxRegister ? tmpMax : MaxRegister;
+            }
+        }
+
+        for (const auto &de : dest) {
+            if (de[0] == 'r') {
+                int tmpMax = std::stoi(de.substr(1));
+                MaxRegister = tmpMax > MaxRegister ? tmpMax : MaxRegister;
+            }
+        }
+    }
+
+    static void RenameRegister(std::unordered_map<std::string, std::string> &actual, Instruction& ins, int& MaxRegister) {
+        bool esStore = ins.operation == "storeAI";
+
+        for (auto &op : ins.operands) {
+            if (op[0] == 'r' && op != "r0" && actual.find(op) != actual.end()) {
+                op = actual[op];
+            }
+        }
+        if (esStore && !ins.destinations.empty()) {
+            std::string& base = ins.destinations[0];
+            if (base[0] == 'r' && base != "r0" && actual.find(base) != actual.end()) {
+                base = actual[base];
+            }
+        }
+
+        if (!esStore && !ins.destinations.empty()) {
+            std::string& de = ins.destinations[0];
+            if (de[0] == 'r' && de != "r0") {
+                std::string newStr = "r" + std::to_string(MaxRegister++);
+                actual[de] = newStr;
+                de = newStr;
+            }
+        }
+
+        std::string ops, dests;
+        for (int k = 0; k < ins.operands.size(); k++) {
+            if (k > 0) {
+                ops += ",";
+            }
+            ops += ins.operands[k];
+        }
+        for (int k = 0; k < ins.destinations.size(); k++) {
+            if (k > 0) {
+                dests += ",";
+            }
+            dests += ins.destinations[k];
+        }
+        ins.fullIns = ins.operation + " " + ops + " => " + dests;
+    }
 };
